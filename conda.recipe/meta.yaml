@@ -1,0 +1,20 @@
+package:
+  name: sample_project
+  version: 1.0
+
+source:
+  path: ../sample_project
+
+build:
+  number: 1
+
+requirements: 
+  build:
+    - python
+    - setuptools
+
+  run:
+    - python
+ 
+  #always_include_files:
+  #  - work/sample/testfile.py
