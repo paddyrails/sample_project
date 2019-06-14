@@ -3,18 +3,18 @@ package:
   version: 1.0
 
 source:
-  path: ../sample_project
+  git_url: https://github.com/syne-navneet/sample_project.git
 
 build:
   number: 1
 
 requirements: 
   build:
-    - python
-    - setuptools
+    #- python
+    #- setuptools
 
   run:
-    - python
+    #- python
  
   #always_include_files:
   #  - work/sample/testfile.py
