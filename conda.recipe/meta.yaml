@@ -1,12 +1,13 @@
 package:
   name: sample_project
-  version: 1.0
+  version: 0.1
 
 source:
-  git_url: https://github.com/syne-navneet/sample_project.git
+  path: ../sample_project
 
 build:
-  number: 1
+  string: py3.7
+  preserve_egg_dir: True
 
 requirements: 
   build:
@@ -15,6 +16,7 @@ requirements:
 
   run:
     #- python
- 
-  #always_include_files:
-  #  - work/sample/testfile.py
+
+#test:
+#  imports:
+#    - sample_project 

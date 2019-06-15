@@ -1,9 +1,11 @@
+#from distutils.core import setup
+#import setuptools
 from setuptools import setup
 
+
 setup(
-    name='sample_proejct',
+    name='sample_project',
     description='A sample project',
-    package=['sample'],
-    version='0.1',
-    install_requires=['numpy=1.5.1']
+    packages=['sample'],
+    version="0.1",
 )
