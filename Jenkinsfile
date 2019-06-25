@@ -32,12 +32,14 @@ pipeline {
                         radon mi --json irisvmpy > mi_report.json
                     '''
                 echo "Test coverage"
-                sh  ''' conda activate
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+        		conda activate
                         coverage run irisvmpy/iris.py 1 1 2 3
                         python -m coverage xml -o reports/coverage.xml
                     '''
                 echo "Style check"
-                sh  ''' conda activate
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+		        conda activate
                         pylint irisvmpy || true
                     '''
             }
@@ -66,11 +68,6 @@ pipeline {
             }
         }
         
-        stage('Test') {
-            steps {
-                echo 'Testing'
-            }
-        }
         stage('Deploy') {
             steps {
                 echo 'Deploying'
