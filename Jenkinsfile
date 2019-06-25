@@ -11,6 +11,7 @@ pipeline {
     }
 
     environment {
+      source ~/anaconda3/etc/profile.d/conda.sh
       PATH="/home/vagrant/anaconda3/bin:$PATH"
     }
 
