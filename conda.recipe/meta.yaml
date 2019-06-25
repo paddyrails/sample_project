@@ -7,16 +7,19 @@ source:
 
 build:
   string: py3.7
-  preserve_egg_dir: True
 
 requirements: 
   build:
-    #- python
-    #- setuptools
+    - python
+    - setuptools
 
   run:
-    #- python
+    - python
 
-#test:
-#  imports:
-#    - sample_project 
+test:
+  requires:
+    - pytest
+  imports:
+    - toolz
+      #  commands:
+      #- py.test -x --test
