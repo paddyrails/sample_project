@@ -16,6 +16,11 @@ pipeline {
 
     stages {
  
+        stage ("Code pull"){
+            steps{
+                checkout scm
+            }
+        }
         stage('Conda Build ') {
             steps {
                 echo "Building sample_project"
