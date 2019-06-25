@@ -19,6 +19,7 @@ requirements:
 test:
   requires:
     - pytest
+    - toolz
   imports:
     - toolz
       #  commands:
