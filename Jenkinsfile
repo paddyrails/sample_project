@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo "Building sample_project"
                 sh  '''pwd 
-                       conda build sample_project/conda.recipe
+                       conda build conda.recipe
                     '''
             }
         }
