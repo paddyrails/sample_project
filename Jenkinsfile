@@ -11,7 +11,6 @@ pipeline {
     }
 
     environment {
-      source ~/anaconda3/etc/profile.d/conda.sh
       PATH="/home/vagrant/anaconda3/bin:$PATH"
     }
 
@@ -26,7 +25,8 @@ pipeline {
         stage('Static code metrics') {
             steps {
                 echo "Raw metrics"
-                sh  ''' conda activate
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+          	        conda activate
                         radon raw --json irisvmpy > raw_report.json
                         radon cc --json irisvmpy > cc_report.json
                         radon mi --json irisvmpy > mi_report.json
