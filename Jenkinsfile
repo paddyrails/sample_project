@@ -45,22 +45,6 @@ pipeline {
             }
 		}
 		
-		stage('Unit tests') {
-            steps {
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
-				        conda activate
-                        python3.7 -m pytest --verbose --junit-xml reports/unit_tests.xml
-                    '''
-            }
-            post {
-                always {
-                    // Archive unit tests for the future
-                    junit allowEmptyResults: true, testResults: 'reports/unit_tests.xml'
-                }
-            }
-        }
-
-					
 		/*stage ("Cobertura - Extract test results") {
 			steps {
                 echo "Old way extract metrics"
@@ -83,6 +67,39 @@ pipeline {
 				}
 			}
         }*/
+		
+		stage('Unit tests') {
+            steps {
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+				        conda activate
+                        python3.7 -m pytest --verbose --junit-xml reports/unit_tests.xml
+                    '''
+            }
+            post {
+                always {
+                    // Archive unit tests for the future
+                    junit allowEmptyResults: true, testResults: 'reports/unit_tests.xml'
+                }
+            }
+        }
+		
+		stage('Acceptance tests') {
+            steps {
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+				        conda activate
+                        behave -f=formatters.cucumber_json:PrettyCucumberJSONFormatter -o ./reports/acceptance.json || true
+                    '''
+            }
+            post {
+                always {
+                    cucumber (buildStatus: 'SUCCESS',
+                    fileIncludePattern: '**/*.json',
+                    jsonReportDirectory: './reports/',
+                    parallelTesting: true,
+                    sortingMethod: 'ALPHABETICAL')
+                }
+            }
+        }
 
         stage('Conda Build ') {
             steps {
