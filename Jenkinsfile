@@ -43,21 +43,23 @@ pipeline {
                         pylint sample_project/irisvmpy || true
                     '''
             }
-            post{
-                always{
-                    step([$class: 'CoberturaPublisher',
-                                   autoUpdateHealth: false,
-                                   autoUpdateStability: false,
-                                   coberturaReportFile: 'reports/coverage.xml',
-                                   failNoReports: false,
-                                   failUnhealthy: false,
-                                   failUnstable: false,
-                                   maxNumberOfBuilds: 10,
-                                   onlyStable: false,
-                                   sourceEncoding: 'ASCII',
-                                   zoomCoverageChart: false])
-                }
-            }
+		}
+        stage ("Extract test results") {
+			cobertura coberturaReportFile: 'path-to/coverage.xml'
+		}
+					
+		stage ("Old ways Extract test results") {			
+			step([$class: 'CoberturaPublisher',
+						   autoUpdateHealth: false,
+						   autoUpdateStability: false,
+						   coberturaReportFile: 'reports/coverage.xml',
+		    			   failNoReports: false,
+						   failUnhealthy: false,
+			    		   failUnstable: false,
+						   maxNumberOfBuilds: 10,
+						   onlyStable: false,
+						   sourceEncoding: 'ASCII',
+						   zoomCoverageChart: false])
         }
 
         stage('Conda Build ') {
@@ -76,13 +78,13 @@ pipeline {
     }
     post {
         always {
-            echo 'This will always run'
+            echo 'Build ${BUILD_TAG} completed'
         }
         success {
-            echo 'This will run only if successful'
+            echo 'Great this build ${BUILD_TAG} is successful'
         }
         failure {
-            echo 'This will run only if failed'
+            echo 'And it failed'
         }
         unstable {
             echo 'This will run only if the run was marked as unstable'
