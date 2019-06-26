@@ -1,0 +1,2 @@
+[behave]
+paths=sample_project/tests/features
