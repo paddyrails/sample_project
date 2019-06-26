@@ -58,7 +58,7 @@ pipeline {
 			}
 			post {
                 always {
-			       ([$class: 'CoberturaPublisher',
+			       step ([$class: 'CoberturaPublisher',
 						   autoUpdateHealth: false,
 						   autoUpdateStability: false,
 						   coberturaReportFile: 'reports/coverage.xml',
