@@ -44,13 +44,8 @@ pipeline {
                     '''
             }
 		}
-        stage ("Extract test results") {
-			steps {
-				cobertura coberturaReportFile: 'path-to/coverage.xml'
-			}
-		}
 					
-		stage ("Old ways Extract test results") {
+		/*stage ("Cobertura - Extract test results") {
 			steps {
                 echo "Old way extract metrics"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
@@ -71,7 +66,7 @@ pipeline {
 						   zoomCoverageChart: false])
 				}
 			}
-        }
+        }*/
 
         stage('Conda Build ') {
             steps {
