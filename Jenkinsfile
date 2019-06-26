@@ -50,8 +50,14 @@ pipeline {
 			}
 		}
 					
-		stage ("Old ways Extract test results") {			
+		stage ("Old ways Extract test results") {
 			steps {
+                echo "Old way extract metrics"
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+				    '''
+			}
+			post {
+                always {
 			       ([$class: 'CoberturaPublisher',
 						   autoUpdateHealth: false,
 						   autoUpdateStability: false,
@@ -63,6 +69,7 @@ pipeline {
 						   onlyStable: false,
 						   sourceEncoding: 'ASCII',
 						   zoomCoverageChart: false])
+				}
 			}
         }
 
