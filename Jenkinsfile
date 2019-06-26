@@ -27,20 +27,20 @@ pipeline {
                 echo "Raw metrics"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
           	        conda activate
-                        radon raw --json irisvmpy > raw_report.json
-                        radon cc --json irisvmpy > cc_report.json
-                        radon mi --json irisvmpy > mi_report.json
+                        radon raw --json sample_project/risvmpy > raw_report.json
+                        radon cc --json sample_project/irisvmpy > cc_report.json
+                        radon mi --json sample_project/irisvmpy > mi_report.json
                     '''
                 echo "Test coverage"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
         		conda activate
-                        coverage run irisvmpy/iris.py 1 1 2 3
+                        coverage run sample_project/irisvmpy/iris.py 1 1 2 3
                         python -m coverage xml -o reports/coverage.xml
                     '''
                 echo "Style check"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
 		        conda activate
-                        pylint irisvmpy || true
+                        pylint sample_project/irisvmpy || true
                     '''
             }
             post{
