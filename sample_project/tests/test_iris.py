@@ -1,7 +1,7 @@
 import pytest
 from click.testing import CliRunner
 
-from irisvmpy import iris
+from sample_project.irisvmpy import iris
 
 class TestCLI(object):
 
