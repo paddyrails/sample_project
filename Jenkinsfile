@@ -51,7 +51,8 @@ pipeline {
 		}
 					
 		stage ("Old ways Extract test results") {			
-			step([$class: 'CoberturaPublisher',
+			steps {
+			       ([$class: 'CoberturaPublisher',
 						   autoUpdateHealth: false,
 						   autoUpdateStability: false,
 						   coberturaReportFile: 'reports/coverage.xml',
@@ -62,6 +63,7 @@ pipeline {
 						   onlyStable: false,
 						   sourceEncoding: 'ASCII',
 						   zoomCoverageChart: false])
+			}
         }
 
         stage('Conda Build ') {
