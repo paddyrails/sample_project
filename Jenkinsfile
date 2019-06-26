@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo "Raw metrics"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
-          	        conda activate
+          	            conda activate
                         radon raw --json sample_project/risvmpy > raw_report.json
                         radon cc --json sample_project/irisvmpy > cc_report.json
                         radon mi --json sample_project/irisvmpy > mi_report.json
@@ -44,6 +44,22 @@ pipeline {
                     '''
             }
 		}
+		
+		stage('Unit tests') {
+            steps {
+                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+				        conda activate
+                        python3.7 -m pytest --verbose --junit-xml reports/unit_tests.xml
+                    '''
+            }
+            post {
+                always {
+                    // Archive unit tests for the future
+                    junit allowEmptyResults: true, testResults: 'reports/unit_tests.xml'
+                }
+            }
+        }
+
 					
 		/*stage ("Cobertura - Extract test results") {
 			steps {
