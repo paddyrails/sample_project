@@ -87,7 +87,7 @@ pipeline {
             steps {
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
 				        conda activate
-                        behave -f sample_project.util.cucumber_json:PrettyCucumberJSONFormatter -o ./reports/acceptance.json || true
+                        behave -f json.pretty -o ./reports/acceptance.json || true
                     '''
             }
             /*post {
