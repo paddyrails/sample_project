@@ -90,7 +90,7 @@ pipeline {
                         behave -f json.pretty -o ./reports/acceptance.json || true
                     '''
             }
-            post {
+            /*post {
                 always {
                     cucumber (buildStatus: 'SUCCESS',
                     fileIncludePattern: '**/*.json',
@@ -98,7 +98,7 @@ pipeline {
                     parallelTesting: true,
                     sortingMethod: 'ALPHABETICAL')
                 }
-            }
+            }*/
         }
 
         stage('Conda Build ') {
