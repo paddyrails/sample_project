@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { docker 'paddypillai/jenkins-python-slave8:latest'}
     
     triggers {
         pollSCM('H/15 * * * 1-5')
@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-      PATH="/home/vagrant/anaconda3/bin:$PATH"
+      PATH="/var/lib/jenkins/anaconda3/bin:$PATH"
     }
 
     stages {
@@ -25,20 +25,20 @@ pipeline {
         stage('Static code metrics') {
             steps {
                 echo "Raw metrics"
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+                sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
           	            conda activate
                         radon raw --json sample_project/risvmpy > raw_report.json
                         radon cc --json sample_project/irisvmpy > cc_report.json
                         radon mi --json sample_project/irisvmpy > mi_report.json
                     '''
                 echo "Test coverage"
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+                sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
 						conda activate
                         coverage run sample_project/irisvmpy/iris.py 1 1 2 3
                         python -m coverage xml -o reports/coverage.xml
                     '''
                 echo "Style check"
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+                sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
 						conda activate
                         pylint sample_project/irisvmpy || true
                     '''
@@ -48,7 +48,7 @@ pipeline {
 		/*stage ("Cobertura - Extract test results") {
 			steps {
                 echo "Old way extract metrics"
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+                sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
 				    '''
 			}
 			post {
@@ -70,7 +70,7 @@ pipeline {
 		
 		stage('Unit tests') {
             steps {
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+                sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
 				        conda activate
                         python3.7 -m pytest --verbose --junit-xml reports/unit_tests.xml
                     '''
@@ -85,7 +85,7 @@ pipeline {
 		
 		stage('Acceptance tests') {
             steps {
-                sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
+                sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
 				        conda activate
                         behave -f json.pretty -o ./reports/acceptance.json || true
                     '''
