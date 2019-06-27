@@ -33,13 +33,13 @@ pipeline {
                     '''
                 echo "Test coverage"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
-        		conda activate
+						conda activate
                         coverage run sample_project/irisvmpy/iris.py 1 1 2 3
                         python -m coverage xml -o reports/coverage.xml
                     '''
                 echo "Style check"
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
-		        conda activate
+						conda activate
                         pylint sample_project/irisvmpy || true
                     '''
             }
