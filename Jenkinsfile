@@ -117,11 +117,7 @@ pipeline {
     }
     post {
         always {
-            steps {
-				echo -n 'Build '
-				echo -n ${BUILD_TAG}
-				echo ' completed'
-			}
+			echo 'Build ' && echo ${BUILD_TAG} && echo ' completed'
         }
         success {
             echo 'Great this build ${BUILD_TAG} is successful'
