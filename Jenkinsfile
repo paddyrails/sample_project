@@ -26,14 +26,15 @@ pipeline {
             steps {
                 echo "Raw metrics"
                 sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
-          	            conda activate
+			sudo pip install -r requirements.txt 
+          	        conda activate
                         radon raw --json sample_project/risvmpy > raw_report.json
                         radon cc --json sample_project/irisvmpy > cc_report.json
                         radon mi --json sample_project/irisvmpy > mi_report.json
                     '''
                 echo "Test coverage"
                 sh  ''' source /var/lib/jenkins/anaconda3/etc/profile.d/conda.sh
-						conda activate
+			conda activate
                         coverage run sample_project/irisvmpy/iris.py 1 1 2 3
                         python -m coverage xml -o reports/coverage.xml
                     '''
