@@ -87,7 +87,7 @@ pipeline {
             steps {
                 sh  ''' source /home/vagrant/anaconda3/etc/profile.d/conda.sh
 				        conda activate
-                        behave -f json.pretty -o ./reports/acceptance.json || true
+                        behave -f sample_project.util.cucumber_json -o ./reports/acceptance.json || true
                     '''
             }
             /*post {
@@ -117,10 +117,10 @@ pipeline {
     }
     post {
         always {
-			sh '''echo 'Build ' && echo ${BUILD_TAG} && echo ' completed' '''
+			echo 'Build completed'
         }
         success {
-            echo 'Great this build ${BUILD_TAG} is successful'
+            echo 'Great this build is successful'
         }
         failure {
             echo 'And it failed'
